@@ -5,15 +5,28 @@ import com.stackroute.muzixapplication.exceptions.TrackAlreadyExistsException;
 import com.stackroute.muzixapplication.exceptions.TrackNotFoundException;
 import com.stackroute.muzixapplication.repository.TrackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Primary
 @Service
+@EnableCaching
 public class TrackServiceImpl2 implements TrackService
 {
+    /*public void simulateDelay(){
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }*/
 
     @Autowired
     private TrackRepository trackRepository;
@@ -23,8 +36,10 @@ public class TrackServiceImpl2 implements TrackService
     }
 
 
+    @CacheEvict(value = "track",allEntries = true)
     @Override
     public Track saveTrack(Track track) throws TrackAlreadyExistsException {
+
         if (trackRepository.existsById(track.getTrackId())){
             throw new TrackAlreadyExistsException();
         }
@@ -32,28 +47,36 @@ public class TrackServiceImpl2 implements TrackService
         return savedTrack;
     }
 
+    @Cacheable("track")
     @Override
     public List<Track> getAllTracks() {
-        return trackRepository.findAll();
+//        simulateDelay();
+        List<Track> trackList=trackRepository.findAll();
+        return trackList;
     }
 
+    @CacheEvict(value = "track",allEntries = true)
     @Override
     public Track updateTrackComment(Integer trackId, String trackComment) throws TrackNotFoundException {
 
-        Track track;
-        if (trackRepository.existsById(trackId)){
-            track=trackRepository.findById(trackId).get();
+        Optional optional = trackRepository.findById(trackId);
+        if (optional.isPresent()) {
+            Track track = trackRepository.findById(trackId).get();
             track.setTrackComment(trackComment);
             trackRepository.save(track);
             return track;
+
+        } else {
+            throw new TrackNotFoundException();
         }
-        throw new TrackNotFoundException();
     }
 
+    @CacheEvict(value = "track",allEntries = true)
     @Override
     public Track deleteTrack(Integer trackId) throws TrackNotFoundException {
         Track track;
-        if (trackRepository.existsById(trackId)){
+        Optional optional = trackRepository.findById(trackId);
+        if (optional.isPresent()){
             track=trackRepository.findById(trackId).get();
             trackRepository.deleteById(trackId);
             return track;

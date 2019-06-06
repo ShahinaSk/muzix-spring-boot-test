@@ -9,7 +9,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SeedData1 implements ApplicationListener<ContextRefreshedEvent> {
+public class ApplicationListenerDemo implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
     private final Environment environment;
@@ -18,7 +18,7 @@ public class SeedData1 implements ApplicationListener<ContextRefreshedEvent> {
     TrackRepository trackRepository;
     Track track=new Track();
 
-    public SeedData1(Environment environment) {
+    public ApplicationListenerDemo(Environment environment) {
         this.environment = environment;
     }
 
@@ -28,6 +28,16 @@ public class SeedData1 implements ApplicationListener<ContextRefreshedEvent> {
         track.setTrackId(Integer.parseInt(environment.getProperty("track1.id")));
         track.setTrackName(environment.getProperty("track1.name"));
         track.setTrackComment(environment.getProperty("track1.comment"));
+        trackRepository.save(track);
+
+        track.setTrackId(Integer.parseInt(environment.getProperty("track3.id")));
+        track.setTrackName(environment.getProperty("track3.name"));
+        track.setTrackComment(environment.getProperty("track3.comment"));
+        trackRepository.save(track);
+
+        track.setTrackId(Integer.parseInt(environment.getProperty("track4.id")));
+        track.setTrackName(environment.getProperty("track4.name"));
+        track.setTrackComment(environment.getProperty("track4.comment"));
         trackRepository.save(track);
 
     }

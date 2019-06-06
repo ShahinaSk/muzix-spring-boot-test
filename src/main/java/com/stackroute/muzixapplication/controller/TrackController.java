@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "api/v1")
@@ -23,7 +24,7 @@ public class TrackController {
         this.trackService = trackService;
     }
 
-    @PostMapping("savetrack")
+    @PostMapping("track")
     public ResponseEntity<?> saveTrack(@RequestBody Track track) throws TrackAlreadyExistsException
     {
 
@@ -34,13 +35,13 @@ public class TrackController {
         return responseEntity;
     }
 
-    @GetMapping("gettracks")
+    @GetMapping("track")
     public ResponseEntity<?> getAllTracks()
     {
         return  new ResponseEntity<List<Track>>(trackService.getAllTracks(),HttpStatus.OK);
     }
 
-    @PutMapping("updatetrack/{id}/{comment}")
+    @PutMapping("track/{id}/{comment}")
     public ResponseEntity<?> getTrackAfterUpdatingComments( @PathVariable Integer id,@PathVariable  String comment) throws TrackNotFoundException
     {
         ResponseEntity responseEntity;
@@ -48,8 +49,8 @@ public class TrackController {
         return responseEntity;
     }
 
-    @DeleteMapping("deletetrack/{id}")
-    public ResponseEntity<?> getTrackAfterUpdatingComments(@PathVariable Integer id) throws TrackNotFoundException
+    @DeleteMapping("track/{id}")
+    public ResponseEntity<?> deleteTrack(@PathVariable Integer id) throws TrackNotFoundException
     {
         ResponseEntity responseEntity;
         responseEntity=new ResponseEntity<Track>(trackService.deleteTrack(id), HttpStatus.OK);
