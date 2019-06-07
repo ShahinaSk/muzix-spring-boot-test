@@ -1,4 +1,4 @@
-package com.stackroute.muzixapplication.startup;
+package com.stackroute.muzixapplication.prefill;
 
 import com.stackroute.muzixapplication.domain.Track;
 import com.stackroute.muzixapplication.repository.TrackRepository;

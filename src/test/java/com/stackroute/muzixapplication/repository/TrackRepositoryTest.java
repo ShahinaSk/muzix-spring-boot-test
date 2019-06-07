@@ -53,7 +53,7 @@ public class TrackRepositoryTest {
         Assert.assertNotEquals(newTrack,track);
     }
 
-    @Test
+    /*@Test
     public void testFindTrackByNameSuccess() {
         trackRepository.save(track);
         Track fetchedTrack=trackRepository.findTrackByName(track.getTrackName());
@@ -66,7 +66,7 @@ public class TrackRepositoryTest {
         trackRepository.save(track);
         Track fetchedTrack=trackRepository.findTrackByName(track.getTrackName());
         Assert.assertNotEquals(testTrack.getTrackName(),fetchedTrack.getTrackName());
-    }
+    }*/
 
     @Test
     public void testDeleteTrackSuccess(){

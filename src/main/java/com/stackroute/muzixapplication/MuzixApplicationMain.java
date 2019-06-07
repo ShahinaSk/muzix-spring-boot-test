@@ -8,7 +8,9 @@ import org.springframework.cache.annotation.EnableCaching;
 @EnableCaching
 public class MuzixApplicationMain {
 
+
 	public static void main(String[] args) {
+
 		SpringApplication.run(MuzixApplicationMain.class, args);
 	}
 

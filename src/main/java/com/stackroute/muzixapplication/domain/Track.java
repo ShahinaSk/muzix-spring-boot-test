@@ -1,22 +1,19 @@
 package com.stackroute.muzixapplication.domain;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-@Entity
+@Document
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Data
-@Setter
-@Getter
 public class Track{
 
     @Id
     private int trackId;
     private String trackName;
     private String trackComment;
+
 
 }

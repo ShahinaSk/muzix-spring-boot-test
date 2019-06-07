@@ -2,6 +2,7 @@ package com.stackroute.muzixapplication.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stackroute.muzixapplication.domain.Track;
+import com.stackroute.muzixapplication.exceptions.GlobalExceptionHandler;
 import com.stackroute.muzixapplication.exceptions.TrackAlreadyExistsException;
 import com.stackroute.muzixapplication.exceptions.TrackNotFoundException;
 import com.stackroute.muzixapplication.service.TrackService;
@@ -47,7 +48,7 @@ public class TrackControllerTest {
     public void setUp() {
 
         MockitoAnnotations.initMocks(this);
-        mockMvc= MockMvcBuilders.standaloneSetup(trackController).setControllerAdvice(new ExceptionHandler()).build();
+        mockMvc= MockMvcBuilders.standaloneSetup(trackController).setControllerAdvice(new GlobalExceptionHandler()).build();
         track=new Track();
         track.setTrackId(101);
         track.setTrackName("lag jaa gale");
